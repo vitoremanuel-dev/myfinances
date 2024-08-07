@@ -1,6 +1,9 @@
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import HighlightCard from "../../components/HighlightCard";
-import TransactionsCard from "../../components/TransactionsCard";
+import TransactionsCard, {
+  TransactionsCardProps,
+} from "../../components/TransactionsCard";
+
 import {
   Container,
   Header,
@@ -17,24 +20,34 @@ import {
   TransactionList,
 } from "./styles";
 
+export interface DataListProps extends TransactionsCardProps {
+  id: string;
+}
+
 const Dashboard = () => {
-  const data = [
+  const data: DataListProps[] = [
     {
+      id: "1",
+      type: "positive",
       title: "Desenvolvimento de site",
       amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
+      category: { name: "Vendas", icon: "dollar-sign" },
       date: "07/08/2024",
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
+      id: "2",
+      type: "negative",
+      title: "Hamburgueria Pizzy",
+      amount: "R$ 59,00",
+      category: { name: "Alimentação", icon: "coffee" },
       date: "07/08/2024",
     },
     {
-      title: "Desenvolvimento de site",
-      amount: "R$ 12.000,00",
-      category: { name: "vendas", icon: "dollar-sign" },
+      id: "3",
+      type: "negative",
+      title: "Aluguel do apartamento",
+      amount: "R$ 1.200,00",
+      category: { name: "Casa", icon: "shopping-bag" },
       date: "07/08/2024",
     },
   ];
@@ -83,11 +96,8 @@ const Dashboard = () => {
         <Title>Listagem</Title>
         <TransactionList
           data={data}
-          renderItem={({ item }: any) => <TransactionsCard data={item} />}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: getBottomSpace()
-          }}
+          kayExtractor={(item) => item.id}
+          renderItem={({ item }) => <TransactionsCard data={item} />}
         />
       </Transactions>
     </Container>
