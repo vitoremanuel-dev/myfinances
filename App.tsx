@@ -1,15 +1,18 @@
 import { ThemeProvider } from "styled-components";
-import AppLoading from "expo-app-loading";
 import {
   useFonts,
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
+import 'intl'
+import 'intl/locale-data/jsonp/pt-BR'
 
 // components
-import Register from "./src/screens/Register";
 import theme from "./src/global/styles/theme";
+
+import { NavigationContainer } from "@react-navigation/native";
+import AppRoutes from "./src/routes/app.routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,12 +22,14 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return null
+    return null;
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <Register />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
